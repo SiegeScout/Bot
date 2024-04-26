@@ -1,16 +1,28 @@
+import { Client, Collection } from 'discord.js';
 import logger from '@/utils/logger';
-// import { Client, Collection, GatewayIntentBits } from 'discord.js';
-// import type { SlashCommand } from '@/types/SlashCommand';
+import config from '@/utils/config';
 
 logger.info('Starting SiegeScout...');
 
-// const client = new Client({
-//   intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMembers],
-//   allowedMentions: {
-//     parse: ['everyone', 'roles'],
-//   },
-// });
+import { loadCommands } from './handlers/commands';
+import { loadEvents } from './handlers/events';
 
-// export const commands: Collection<string, SlashCommand> = new Collection();
+import type SlashCommand from '@/structures/SlashCommand';
 
-// export const start = Date.now();
+export const start = Date.now();
+
+export const client = new Client({
+  intents: [],
+  allowedMentions: {
+    parse: ['everyone', 'roles'],
+  },
+});
+
+export const commands: Collection<string, SlashCommand> = new Collection();
+
+logger.info('Loading commands...');
+await loadCommands();
+logger.info('Loading events...');
+await loadEvents();
+
+client.login(config.TOKEN);
