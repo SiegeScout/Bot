@@ -1,6 +1,8 @@
 import type { ChatInputCommandInteraction } from "discord.js";
 import { commands } from "..";
 import Event from "@/structures/Event";
+import logger from "@/utils/logger";
+import { errorEmbed } from "@/utils/embeds";
 
 export default class ChatInteractionEvent extends Event {
   constructor() {
@@ -8,9 +10,25 @@ export default class ChatInteractionEvent extends Event {
   }
 
   async execute(interaction: ChatInputCommandInteraction) {
-    if (interaction.isChatInputCommand()) {
-      const command = commands.get(interaction.commandName);
-      if (command) command.execute(interaction);
+    if (!interaction.isChatInputCommand()) return;
+
+    const command = commands.get(interaction.commandName);
+
+    if (!command) {
+      logger.error(`Unknown command ${interaction.commandName} executed by ${interaction.user.username}`);
+      return void await interaction.reply({
+        embeds: [errorEmbed('', '**Error!** There was an error executing this command')]
+      });
+    }
+
+    if (command.options?.guildOnly && !interaction.guild) return void await interaction.reply({
+      embeds: [errorEmbed('', '**Error!** This command can only be used in a server')]
+    });
+
+    try {
+      await command.execute(interaction);
+    } catch (error) {
+      logger.error(`Error executing command ${interaction.commandName} by ${interaction.user.username}`, error);
     }
   }
 }
