@@ -6,6 +6,9 @@ interface IConfig {
   ENV: 'development' | 'production';
   TOKEN: string;
   DEV_GUILD_ID: string;
+
+  MEILISEARCH_HOST: string;
+  MEILISEARCH_KEY: string;
 }
 
 const handler = {
