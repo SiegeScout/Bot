@@ -12,7 +12,7 @@ const logger = winston.createLogger({
       )}: ${message}`;
     })
   ),
-  transports: [new winston.transports.Console()],
+  transports: [new winston.transports.Console({ level: 'debug' })],
 });
 
 export default logger;
