@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 interface IConfig {
+  ENV: 'development' | 'production';
   TOKEN: string;
 }
 
