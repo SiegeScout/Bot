@@ -5,6 +5,7 @@ dotenv.config();
 interface IConfig {
   ENV: 'development' | 'production';
   TOKEN: string;
+  DEV_GUILD_ID: string;
 }
 
 const handler = {

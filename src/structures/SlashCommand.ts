@@ -1,4 +1,4 @@
-import type { ChatInputCommandInteraction, PermissionResolvable } from "discord.js";
+import type { ChatInputCommandInteraction, PermissionResolvable, RESTPostAPIApplicationCommandsJSONBody, SlashCommandBuilder } from "discord.js";
 
 export type SlashCommandOptions = {
   requiredPermissions?: PermissionResolvable[];
@@ -19,5 +19,11 @@ export default class SlashCommand {
 
   execute(_: ChatInputCommandInteraction) {
     throw new Error("Method not implemented.");
+  }
+
+  async build(
+    command: SlashCommandBuilder
+  ): Promise<SlashCommandBuilder | RESTPostAPIApplicationCommandsJSONBody> {
+    return command;
   }
 }
