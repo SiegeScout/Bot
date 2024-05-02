@@ -1,9 +1,9 @@
-import { EmbedBuilder, type ColorResolvable } from "discord.js"
+import { EmbedBuilder, resolveColor, type ColorResolvable } from "discord.js"
 
-export const primaryEmbed = (title: string, description: string, color: ColorResolvable = 'Green') => {
-  return new EmbedBuilder().setTitle(title).setDescription(description).setColor(color)
+export const primaryEmbed = (title: string, description: string, color: ColorResolvable = resolveColor('#3379BA')) => {
+  return new EmbedBuilder().setTitle(title || null).setDescription(description).setColor(color)
 }
 
 export const errorEmbed = (title: string, description: string, color: ColorResolvable = 'Red') => {
-  return new EmbedBuilder().setTitle(title).setDescription(description).setColor(color)
+  return new EmbedBuilder().setTitle(title || null).setDescription(description).setColor(color)
 }
