@@ -18,4 +18,8 @@ export class MeiliSearchService {
   async search(index: string, query: string) {
     return this.client.index(index).search(query, { limit: 25 });
   }
+
+  async fetch(index: string, id: string) {
+    return this.client.index(index).getDocument(id);
+  }
 }

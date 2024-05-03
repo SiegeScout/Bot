@@ -17,8 +17,6 @@ export default class ChatInteractionEvent extends Event {
 
     const searchResults = await meilisearch.search('operators', value)
 
-    console.log(searchResults.hits.map((hit) => hit['name'] + ' - ' + hit['slug']))
-
     await interaction.respond(
       searchResults.hits.map((hit) => ({
         name: hit['name'],
